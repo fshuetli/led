@@ -20,10 +20,10 @@ def change(relaygroup, mode):
         GPIO.setup(x, GPIO.OUT)
         #print "Set port mode: ",x,"to OUT"
         if mode=="ON":
-            GPIO.output(x,GPIO.HIGH)
+            GPIO.output(x,GPIO.LOW)
             #print "Set port state:",x,"HIGH"
         else:
-            GPIO.output(x,GPIO.LOW)
+            GPIO.output(x,GPIO.HIGH)
             #print "Set port state:",x,"LOW"
 
 def get_timestamp():
