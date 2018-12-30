@@ -1,0 +1,70 @@
+swagger: "2.0"
+info:
+  description: This is the swagger file that goes with our server code
+  version: "1.0.0"
+  title: Swagger Rest Article
+consumes:
+  - application/json
+produces:
+  - application/json
+
+basePath: /api
+
+# Paths supported by the server application
+paths:
+  /led:
+    get:
+      operationId: led.aus
+      tags:
+        - led
+      summary: Read the entire list of led
+      description: Read the list of led
+      parameters:
+        - name: length
+          in: query
+          type: integer
+          description: Number of led to get from led
+          required: false
+        - name: offset
+          in: query
+          type: integer
+          description: Offset from beginning of list where to start gathering led
+          required: false
+      responses:
+        200:
+          description: Successfully read led list operation
+          schema:
+            type: array
+            items:
+              properties:
+                minutes:
+                  type: string
+                passw:
+                  type: string
+                timestamp:
+                  type: string
+
+    post:
+      operationId: led.ein
+      tags:
+        - led
+      summary: Send a message to turn on the LED
+      description: Send a message to turn on the LED
+      parameters:
+        - name: params
+          in: body
+          description: Send a message to turn on the LED
+          required: True
+          schema:
+            type: object
+            properties:
+              minutes:
+                type: string
+                description: How long to turn on the LED
+              passw:
+                type: string
+                description: Secret to use the API
+      responses:
+        201:
+          description: Successfully called the API
+
