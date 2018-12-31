@@ -15,11 +15,14 @@
     <div class="container">
         <h1 class="banner">Fischhüttli Licht</h1>
         <div class="section editor">
-            <label for="minutes">Minuten
-                <input id="minutes" type="text" />
+            <label>Minutes
             </label>
+              <form name="registrationForm">
+                <output name="minutesOutputName" id="minutesOutputId">3</output>
+                <input type="range" name="minutesInputName" id="minutes" value="3" min="1" max="10" oninput="minutesOutputId.value = minutes.value">
+             </form>
             <br />
-            <label for="passw">Passwort
+            <label width=100% for="passw">Passwort
                 <input id="passw" type="text" />
             </label>
             <br />
