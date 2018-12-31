@@ -1,5 +1,5 @@
 #!/bin/bash
-PS=$(ps -ef | grep "python server.p[y]")
+PS=$(ps -ef | grep "python.*server.p[y]")
 if [[ -n "$PS" ]]; then
   echo "Server is already running ($PS)"
 else
