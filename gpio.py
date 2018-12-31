@@ -1,5 +1,3 @@
-
-import argparse
 import RPi.GPIO as GPIO
 from datetime import datetime
 
