@@ -1,7 +1,15 @@
 
 # Read https://blog.ekbana.com/deploying-flask-application-using-mod-wsgi-bdf59174a389
 
-# Clone repo and fix permissions to non-root user with chown -R <user>:<group> <some_folder>
+# Create pi user if needed
+
+# cd /home/pi
+
+# mkdir gits
+
+# cd gits
+
+# Clone repo and fix permissions (by chown -R pi:pi <your_path>
 
 # Have this file structure
 /home/pi# tree
@@ -46,7 +54,7 @@ sudo touch /etc/apache2/sites-available/LedApp.conf
 Listen 38090
 
 <VirtualHost *:38090>
-   WSGIDaemonProcess LedApp user=pi group=editorial threads=5 python-path=/home/pi/gits/led
+   WSGIDaemonProcess LedApp user=pi group=pi threads=5 python-path=/home/pi/gits/led
    WSGIScriptAlias / /home/pi/gits/led/ledapp.wsgi
    <Directory /home/pi/gits/led>
       WSGIProcessGroup LedApp
@@ -65,7 +73,7 @@ Listen 38090
 
 # Add App
 sudo a2ensite LedApp
-service apache2 reload
+sudo systemctl reload apache2
 
 # Check Config
 sudo apache2ctl configtest
