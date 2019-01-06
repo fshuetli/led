@@ -1,8 +1,8 @@
 import RPi.GPIO as GPIO
 from datetime import datetime
 
-import os 
-dir_path = os.path.dirname(os.path.realpath(__file__))
+import os
+dir_path = os.path.dirname(os.path.realpath(__file__)) +"/"
 
 # Initialize Relaybays => run 'pinout' on PI to see pin numbering
 # physical pin numbering used

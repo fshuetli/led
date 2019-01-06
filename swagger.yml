@@ -9,6 +9,10 @@ produces:
   - application/json
 
 basePath: /api
+# In order to see the swagger ui, make sure you have done.
+# sudo pip install swagger-ui-bundle
+# Then open http://localhost:5000/api/ui/#!/
+
 
 # Paths supported by the server application
 paths:
@@ -68,3 +72,19 @@ paths:
         201:
           description: Successfully called the API
 
+  /stats:
+    get:
+      operationId: stats.howlong
+      tags:
+        - stats
+      summary: Check how long the LED has been on
+      description: Check how long the LED has been on
+      responses:
+        200:
+          description: Successfully read how long
+          schema:
+            type: array
+            items:
+              properties:
+                uptime:
+                  type: string

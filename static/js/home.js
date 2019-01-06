@@ -36,8 +36,37 @@ ns.model = (function() {
                 })
             };
             $.ajax(ajax_options)
-        }
+        },
+        'howlong': function() {
+          let ajax_options = {
+              type: 'GET',
+              url: 'api/stats',
+              accepts: 'application/json',
+              dataType: 'json'
+          };
+          $.ajax(ajax_options)
+          .done(function(data) {
+              $event_pump.trigger('model_uptime_read_success', [data]);
+          })
+      },
     };
+}());
+
+
+// Create the view instance
+ns.view = (function() {
+  'use strict';
+
+  // return the API
+  return {
+      build_uptime: function(x) {
+          if (x) {
+              var paragraph = document.getElementById("uptime");
+              var text = document.createTextNode(x[0].uptime);
+              paragraph.appendChild(text);
+          }
+      }
+  };
 }());
 
 // Create the controller
@@ -51,9 +80,9 @@ ns.controller = (function(m, v) {
         $passw = $('#passw');
 
     // Get the data from the model after the controller is done initializing
-    //setTimeout(function() {
-    //    model.aus();
-    //}, 100)
+    setTimeout(function() {
+        model.howlong();
+    }, 100)
 
     // Validate input
     function validate(minutes, passw) {
@@ -66,7 +95,7 @@ ns.controller = (function(m, v) {
             passw = $passw.val();
 
         e.preventDefault();
-        if (minutes !== "" && passw !== "" && minutes<20 && minutes.length<3 && passw.length < 10) {
+        if (minutes !== "" && passw !== "" && minutes<21 && minutes.length<3 && passw.length < 10) {
             model.ein(minutes, passw)
         } else {
             alert('Eingabe war falsch.');
@@ -77,7 +106,11 @@ ns.controller = (function(m, v) {
     $('#aus').click(function(e) {
         e.preventDefault();
         model.aus()
+    });
 
+    // Handle the model events
+    $event_pump.on('model_uptime_read_success', function(e, data) {
+      view.build_uptime(data);
     });
 
     $event_pump.on('model_error', function(e, xhr, textStatus, errorThrown) {
