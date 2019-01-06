@@ -35,21 +35,20 @@ def howlong():
         tic = 0
         toc = 0
         while line:
-            print(line)
 
             if look_for_on:
                 m = re.match( r'On\s+-\s+(\d{4}-.*)', line, re.M|re.I)
                 if m:
-                    print "Found ON time", m.group(1)
+                    #print "Found ON time", m.group(1)
                     tic = time.mktime(time.strptime(m.group(1),"%Y-%m-%d %H:%M:%S"))
-                    print tic
+                    #print tic
                     look_for_on = False
             else:
                 m = re.match( r'Off\s+-\s+(\d{4}-.*)', line, re.M|re.I)
                 if m:
-                    print "Found OFF time : ", m.group(1)
+                    #print "Found OFF time : ", m.group(1)
                     toc = time.mktime(time.strptime(m.group(1),"%Y-%m-%d %H:%M:%S"))
-                    print toc
+                    #print toc
                     diff = toc - tic
                     total_seconds += diff
                     look_for_on = True
@@ -62,5 +61,5 @@ def howlong():
     z = [{"uptime": str(display_time(total_seconds))}]
     return z
 
-print howlong()
+#print howlong()
 
