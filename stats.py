@@ -3,6 +3,9 @@ import re
 import datetime
 import time
 
+import os
+dir_path = os.path.dirname(os.path.realpath(__file__)) +"/"
+
 intervals = (
     ('w', 604800),  # 60 * 60 * 24 * 7
     ('d', 86400),    # 60 * 60 * 24
@@ -29,7 +32,7 @@ def howlong():
     # Open the file with read only permit
     total_seconds = 0
     try:
-        f = open('ledlog.txt', 'r')
+        f = open(dir_path + '/ledlog.txt', 'r')
         line = f.readline()
         look_for_on = True
         tic = 0
@@ -56,6 +59,7 @@ def howlong():
             line = f.readline()
         f.close()
     except:
+        print "it was not possible to open the led log file"
         pass
 
     z = [{"uptime": str(display_time(total_seconds))}]
