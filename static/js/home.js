@@ -97,6 +97,8 @@ ns.controller = (function(m, v) {
         e.preventDefault();
         if (minutes !== "" && passw !== "" && minutes<21 && minutes.length<3 && passw.length < 10) {
             model.ein(minutes, passw)
+            document.body.style.backgroundColor = "#26a69a";
+            setTimeout(function() {document.body.style.backgroundColor = "white"}, 1500);
         } else {
             alert('Eingabe war falsch.');
         }
@@ -106,6 +108,8 @@ ns.controller = (function(m, v) {
     $('#aus').click(function(e) {
         e.preventDefault();
         model.aus()
+        document.body.style.backgroundColor = "#F44336";
+        setTimeout(function() {document.body.style.backgroundColor = "white"}, 1500);
     });
 
     // Handle the model events
