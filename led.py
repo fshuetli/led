@@ -30,7 +30,7 @@ def clear_all_timers():
 
 # Check if allowed
 def check_permission(passw, minutes):
-    if (len(passw) < 16 and len(minutes) < 3 and int(minutes) < 21):
+    if (len(passw) < 16 and len(minutes) < 3 and int(minutes) < 61):
         if "452504d58348a5ea316a2f0d417999d4" == hashlib.md5(passw).hexdigest() or "0e1c46abe6015f039d3be387b616a6b1" == hashlib.md5(passw).hexdigest():
             return True
         else:

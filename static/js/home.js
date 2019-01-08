@@ -95,7 +95,7 @@ ns.controller = (function(m, v) {
             passw = $passw.val();
 
         e.preventDefault();
-        if (minutes !== "" && passw !== "" && minutes<21 && minutes.length<3 && passw.length < 10) {
+        if (minutes !== "" && passw !== "" && minutes<61 && minutes.length<3 && passw.length < 10) {
             model.ein(minutes, passw)
             document.body.style.backgroundColor = "#26a69a";
             setTimeout(function() {document.body.style.backgroundColor = "white"}, 1500);
