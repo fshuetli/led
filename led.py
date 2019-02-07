@@ -18,6 +18,7 @@ from flask import make_response, abort
 import hashlib
 from threading import Timer
 import threading
+from threading import _Timer
 
 # Import gpio methods
 from gpio import *
@@ -25,8 +26,20 @@ from gpio import *
 # Cancel all pre-existing timers
 def clear_all_timers():
     for thing in threading.enumerate():
+        print("\n\nhallloooo")
+        print(thing.name)
+        print("giiga:")
         if isinstance(thing, threading._Timer):
             thing.cancel()
+
+
+# Cancel all pre-existing timers
+def clear_named_timers(x):
+    for thing in threading.enumerate():
+        if isinstance(thing, threading._Timer):
+            if thing.name == x:
+                thing.cancel()
+
 
 # Check if allowed
 def check_permission(passw, minutes):
@@ -44,20 +57,36 @@ def aus():
     set_led_off()
     return "", 200
 
+def named_timer(name, interval, function, *args, **kwargs):
+    """Factory function to create named Timer objects.
+
+      Timers call a function after a specified number of seconds:
+
+          t = Timer('Name', 30.0, function)
+          t.start()
+          t.cancel()  # stop the timer's action if it's still waiting
+    """
+    timer = _Timer(interval, function, *args, **kwargs)
+    timer.name = name
+    return timer
 
 # What's done when API /led post (on) is called
-def ein(params):
+def ein():
     # Get params of post body
-    passw = params.get("passw", None)
-    minutes = params.get("minutes", None)
+    #passw = params.get("passw", None)
+    #minutes = params.get("minutes", None)
+    minutes = 1
 
     # Check Passw
-    if check_permission(passw, minutes):
+    if True:
         # Turn on Light
         set_led_on()
         # Set of new timer
         clear_all_timers()
-        Timer(int(minutes)*60, set_led_off, ()).start()
+        #a = Timer(int(minutes)*60, set_led_off, ()).start()
+        a = named_timer("asdf" ,int(minutes)*60, set_led_off, ())
+        #a.name = "asdf"
+        a.start()
         # Return API response
         return "", 201
     else:
@@ -70,5 +99,6 @@ def ein(params):
         )
 
 # initially turn of
+ein()
 aus()
 
