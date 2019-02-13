@@ -57,8 +57,8 @@ def check_permission(passw, minutes):
 
 # What's done when API /led get (off) is called
 def aus():
-    clear_all_timers()
-    set_led_off()
+    clear_named_timers("vorn")
+    set_led_on_index(0)
     return "", 200
 
 
@@ -71,11 +71,42 @@ def ein(params):
     # Check Passw
     if check_permission(passw, minutes):
         # Turn on Light
-        set_led_on()
+        set_led_on_index(0)
         # Set of new timer
-        clear_all_timers()
-        #a = Timer(int(minutes)*60, set_led_off, ()).start()
-        a = named_timer("asdf" ,int(minutes)*60, set_led_off, ())
+        clear_named_timers("vorn")
+        a = named_timer("vorn" ,int(minutes)*60, set_led_off_index, args=[0])
+        a.start()
+        # Return API response
+        return "", 201
+    else:
+        # Don't do anything
+        print("Passwort war falsch. Schalte Licht nicht ein.")
+        no_set_led()
+        abort(
+            406,
+            "",
+        )
+
+# What's done when API /led get (off) is called
+def aus2():
+    clear_named_timers("wald")
+    set_led_off_index(1)
+    return "", 200
+
+
+# What's done when API /led post (on) is called
+def ein2(params):
+    # Get params of post body
+    passw = params.get("passw", None)
+    minutes = params.get("minutes", None)
+
+    # Check Passw
+    if check_permission(passw, minutes):
+        # Turn on Light
+        set_led_on_index(1)
+        # Set of new timer
+        clear_named_timers("wald")
+        a = named_timer("vorn" ,int(minutes)*60, set_led_off_index, args=[1])
         a.start()
         # Return API response
         return "", 201

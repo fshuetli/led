@@ -14,7 +14,7 @@ ns.model = (function() {
 
     // Return the API
     return {
-        'aus': function() {
+        aus: function() {
             let ajax_options = {
                 type: 'GET',
                 url: 'api/led',
@@ -27,6 +27,29 @@ ns.model = (function() {
             let ajax_options = {
                 type: 'POST',
                 url: 'api/led',
+                accepts: 'application/json',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: JSON.stringify({
+                    'minutes': minutes,
+                    'passw': passw
+                })
+            };
+            $.ajax(ajax_options)
+        },
+        aus2: function() {
+          let ajax_options = {
+              type: 'GET',
+              url: 'api/led2',
+              accepts: 'application/json',
+              dataType: 'json'
+          };
+          $.ajax(ajax_options)
+        },
+        ein2: function(minutes, passw) {
+            let ajax_options = {
+                type: 'POST',
+                url: 'api/led2',
                 accepts: 'application/json',
                 contentType: 'application/json',
                 dataType: 'json',
@@ -105,11 +128,33 @@ ns.controller = (function(m, v) {
 
     });
 
+    $('#ein2').click(function(e) {
+      let minutes = $minutes.val(),
+          passw = $passw.val();
+
+      e.preventDefault();
+      if (minutes !== "" && passw !== "" && minutes<61 && minutes.length<3 && passw.length < 10) {
+          model.ein2(minutes, passw)
+          document.body.style.backgroundColor = "#26a69a";
+          setTimeout(function() {document.body.style.backgroundColor = "white"}, 1500);
+      } else {
+          alert('Eingabe war falsch.');
+      }
+
+    });
+
     $('#aus').click(function(e) {
         e.preventDefault();
         model.aus()
         document.body.style.backgroundColor = "#F44336";
         setTimeout(function() {document.body.style.backgroundColor = "white"}, 1500);
+    });
+
+    $('#aus2').click(function(e) {
+      e.preventDefault();
+      model.aus2()
+      document.body.style.backgroundColor = "#F44336";
+      setTimeout(function() {document.body.style.backgroundColor = "white"}, 1500);
     });
 
     // Handle the model events
